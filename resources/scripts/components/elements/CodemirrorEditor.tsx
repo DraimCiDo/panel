@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import modes from '@/modes';
 
 require('codemirror/lib/codemirror.css');
-require('codemirror/theme/ayu-mirage.css');
+require('codemirror/theme/ambiance.css');
 require('codemirror/addon/edit/closebrackets');
 require('codemirror/addon/edit/closetag');
 require('codemirror/addon/edit/matchbrackets');
@@ -79,7 +79,14 @@ require('codemirror/mode/vue/vue');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 
+
 const EditorContainer = styled.div`
+    line-height: 1.40em;
+    background-color: #202020;
+    -webkit-box-shadow: inset 0 0 10px black;
+    -moz-box-shadow: inset 0 0 10px black;
+    box-shadow: inset 0 0 10px black;
+
     min-height: 16rem;
     height: calc(100vh - 20rem);
     ${tw`relative`};
@@ -94,14 +101,25 @@ const EditorContainer = styled.div`
     }
 
     .CodeMirror-linenumber {
-        padding: 1px 12px 0 12px !important;
+        text-shadow: 0px 1px 1px #4d4d4d;
+        color: #111;
+        padding: 0 5px;
     }
 
-    .CodeMirror-foldmarker {
-        color: #cbccc6;
-        text-shadow: none;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
+    .CodeMirror-guttermarker {
+        color: #aaa;
+    }
+
+    .CodeMirror-guttermarker-subtle {
+        color: #111;
+    }
+
+    .CodeMirror-cursor {
+        border-left: 1px solid #7991E8;
+    }
+
+    .CodeMirror-activeline-background {
+        background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.031);
     }
 `;
 
@@ -151,7 +169,7 @@ export default ({ style, initialContent, filename, mode, fetchContent, onContent
 
         const e = CodeMirror.fromTextArea(node, {
             mode: 'text/plain',
-            theme: 'ayu-mirage',
+            theme: 'ambiance',
             indentUnit: 4,
             smartIndent: true,
             tabSize: 4,
@@ -172,7 +190,7 @@ export default ({ style, initialContent, filename, mode, fetchContent, onContent
             // @ts-expect-error this property is actually used, the d.ts file for CodeMirror is incorrect.
             autoCloseBrackets: true,
             matchBrackets: true,
-            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-activeline-background'],
         });
 
         setEditor(e);
